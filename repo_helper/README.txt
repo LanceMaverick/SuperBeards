@@ -1,1 +1,0 @@
-A beard named repo_helper for skybeard-2.
