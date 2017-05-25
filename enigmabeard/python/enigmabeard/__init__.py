@@ -2,7 +2,7 @@ import telepot
 import telepot.aio
 from skybeard.beards import BeardChatHandler
 from skybeard.predicates import regex_predicate
-from skybeard.decorators import onerror
+from skybeard.decorators import onerror, getargsorask
 from skybeard.utils import get_args
 import enigma
 class EnigmaBeard(BeardChatHandler):
@@ -18,10 +18,10 @@ class EnigmaBeard(BeardChatHandler):
         ("encrypt", "encode", "Encode message using M3 Enigma Machine." ),
     ]
 
-    @onerror
-    async def encode(self, msg):
-        in_args = get_args(msg['text'])
+    @onerror()
+    @getargsorask([("key", 'What\'s the key?'), ("message", 'What\'s the message?')])
+    async def encode(self, msg, key, message):
         enigma_m3 = enigma.Enigma()
-        enigma_m3.set_key(in_args[0])
-        await self.sender.sendMessage(enigma_m3.type_phrase(in_args[1])) 
+        enigma_m3.set_key(key)
+        await self.sender.sendMessage(enigma_m3.type_phrase(message)) 
 
