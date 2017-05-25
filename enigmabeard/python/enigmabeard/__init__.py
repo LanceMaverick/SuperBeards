@@ -18,6 +18,8 @@ class EnigmaBeard(BeardChatHandler):
         ("encrypt", "encode", "Encode message using M3 Enigma Machine." ),
     ]
 
+    _timeout = 5*60
+
     @onerror()
     @getargsorask([("key", 'What\'s the key?'), ("message", 'What\'s the message?')])
     async def encode(self, msg, key, message):
